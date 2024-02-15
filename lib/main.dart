@@ -4,8 +4,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -15,22 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 63, 211, 219)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -41,7 +25,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-
   final String title;
 
   @override
@@ -49,9 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
-  Map<String,String> forecast = {
+  Map<String, String> forecast = {
     "name": "today",
     "temperature": "35",
     "shortForecast": "Snowy",
@@ -60,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "windDirection": "SE",
     "isDaytime": "true",
     "probabilityOfPercipitation": "100"
-
   };
 
   Map<String, String> location = {
@@ -71,12 +51,114 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Text(location["city"]!);
+    return Scaffold(
+        body: Padding(
+      padding:
+          const EdgeInsets.only(left: 50.0, top: 100, right: 50, bottom: 50),
+      child: Center(
+          child: Column(children: [
+        Text(
+          location["city"]!,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 25),
+        ),
+        Text(
+          location["state"]!,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 25),
+        ),
+        Text(
+          location["zip"]!,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 25),
+        ),
+        SizedBox(height: 50),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              forecast["name"]! + ":",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(width: 10), // Add space between the text widgets
+            Text(
+              forecast["temperature"]!,
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(width: 10),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              forecast["shortForecast"]!,
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(width: 10), // Add space between the text widgets
+            Text(
+              forecast["detailedForecast"]!,
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Wind speed: " + forecast["windSpeed"]!,
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(width: 10), // Add space between the text widgets
+            Text(
+              forecast["windDirection"]!,
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Forecast is for daytime hours.",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(width: 10), // Add space between the text widgets
+            Text(
+              "Precipitation: 54%",
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        )
+      ])),
+    ));
+  }
+}
+
+class BoxPlaceHolder extends StatelessWidget {
+  final double? height;
+  final double? width;
+  final double padding;
+  final String text;
+
+  const BoxPlaceHolder(
+      {super.key,
+      required this.height,
+      required this.width,
+      this.padding = 0,
+      this.text = ""});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(padding),
+        child: SizedBox(
+            width: width,
+            height: height,
+            child: Placeholder(
+                child: Text(
+              text,
+              textAlign: TextAlign.center,
+            ))));
   }
 }
